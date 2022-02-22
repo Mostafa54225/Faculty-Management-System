@@ -89,7 +89,7 @@ function Row(props) {
                 variant="contained"
                 target="_blank"
                 className="btn btn-primary"
-                to={{pathname: `/studentHistory/${row.studentAddress}`}}
+                to={{pathname: `/studentHistory/${row.studentAddress !== '' ? row.studentAddress : "0x00"}`, state: {studentId: row.studentId, studentName: row.studentName, studentAddress: row.studentAddress}}}
               >Student's History</Link>
               <Table size="small" aria-label="purchases">
                 <TableHead>

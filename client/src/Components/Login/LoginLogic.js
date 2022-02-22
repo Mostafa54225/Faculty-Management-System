@@ -29,8 +29,8 @@ const useLoginLogic = (currentAccount) => {
     } else {
       try {
         let result = await Axios.post("http://localhost:3001/roles/getRole", {
-          idRole: parseInt(nationalID),
-          password: parseInt(password),
+          idRole: nationalID,
+          password: password,
         })
         if (result.data !== undefined) {
           setRoleName(result.data.roleName)

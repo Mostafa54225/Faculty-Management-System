@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Courses } from "./Courses";
 import { Student } from "./Student";
 
 
@@ -21,6 +22,11 @@ export class Professor {
 
   @OneToMany(type => Student, student => student.academicAdvisor)
   studentsForAA!: Array<Student> 
+
+
+  @OneToMany(type => Courses, course => course.professor)
+  courses!: Array<Courses>
+  
 
   // addStudentForAA(student: Student) {
   //   if(this.studentsForAA == null) {

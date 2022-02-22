@@ -61,6 +61,7 @@ const DropCoursesLogic = (registerCourses) => {
               registeredCourses: JSON.stringify(courses),
             }
           ),
+          await Axios.get("/api/mine-transactions")
         ])
 
         showNotification("Success", "You've dropped successfully!", "success")

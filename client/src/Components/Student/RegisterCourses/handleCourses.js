@@ -17,7 +17,6 @@ const handleCoursesLevel1 = (data, semesterType, passedCourses) => {
     // Check Prerequisite for the current courses
     checkPrerequisite(courses, passedCourses)
     
-    console.log(courses)
     return courses
   }
 }

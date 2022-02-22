@@ -5,11 +5,22 @@ import {
   Box,
   Grid,
   Typography,
+  makeStyles,
+  Button
 } from "@material-ui/core"
-import useRoles from "../utils/handleRoles"
-import AdminOnly from './AdminOnly'
 
+const useStyles = makeStyles({
+  button: {
+    backgroundColor: '#3c52b2',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#3c52b2',
+  },
+}})
 function AdminHome(props) {
+  const classes = useStyles()
+
 
   // const { currentAccount, role } = useRoles()
   // const [currentAccount, setCurrentAccount] = useState(localStorage.getItem("currentAccount"))
@@ -25,49 +36,97 @@ function AdminHome(props) {
           <Grid container justifyContent="center" spacing={2}>
             <Grid item>
               <Box mt={1}>
-                <Link className="btn btn-primary" to="/AdminHome/AddAccount">
+              <Button
+                  type="button"
+                  variant="contained"
+                  className={classes.button}
+                  component={Link}
+                  to={{
+                    pathname: `${window.location.pathname}/AddAccount`,
+                  }}
+                >
                   Add Account
-                </Link>
+                </Button>
               </Box>
             </Grid>
   
             <Grid item>
               <Box mt={1}>
-                <Link className="btn btn-primary" to="/AdminHome/Semester">
+                <Button
+                  type="button"
+                  variant="contained"
+                  className={classes.button}
+                  component={Link}
+                  to={{
+                    pathname: `${window.location.pathname}/Semester`,
+                  }}
+                >
                   Semester
-                </Link>
+                </Button>
               </Box>
             </Grid>
 
             <Grid item>
               <Box mt={1}>
-                <Link className="btn btn-primary" to="/AdminHome/AddCourses">
+                <Button
+                  type="button"
+                  variant="contained"
+                  className={classes.button}
+                  component={Link}
+                  to={{
+                    pathname: `${window.location.pathname}/AddCourses`,
+                  }}
+                >
                   Add Courses
-                </Link>
+                </Button>
               </Box>
             </Grid>
 
             <Grid item>
               <Box mt={1}>
-                <Link className="btn btn-primary" to="/AdminHome/AssignAAs">
+                <Button
+                  type="button"
+                  variant="contained"
+                  className={classes.button}
+                  component={Link}
+                  to={{
+                    pathname: `${window.location.pathname}/AssignAAs`,
+                  }}
+                >
                   Assing Students To AA
-                </Link>
+                </Button>
               </Box>
             </Grid>
 
             <Grid item>
               <Box mt={1}>
-                <Link className="btn btn-primary" to="/AdminHome/SearchStudent">
+                <Button
+                  type="button"
+                  variant="contained"
+                  className={classes.button}
+                  component={Link}
+                  to={{
+                    pathname: `${window.location.pathname}/SearchStudent`,
+                  }}
+                >
                   Search Students
-                </Link>
+                </Button>
               </Box>
             </Grid>
 
             <Grid item>
               <Box mt={1}>
-                <Link className="btn btn-primary" to="/AdminHome/DeleteStudent">
+                <Button
+                  type="button"
+                  variant="contained"
+                  className={classes.button}
+                  component={Link}
+                  to={{
+                    pathname: `${window.location.pathname}/DeleteStudent`,
+                  }}
+                >
                   Delete Students
-                </Link>
+                </Button>
               </Box>
             </Grid>
           </Grid>
@@ -75,7 +134,6 @@ function AdminHome(props) {
       </>
     )
   // }
-  return <AdminOnly />
   
 }
 

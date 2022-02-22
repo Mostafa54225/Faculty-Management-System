@@ -27,8 +27,8 @@ function App() {
     const fetchData = async () => {
       if (isMounted) {
         const account = await axios.get("/api/public-key")
-        // const role = await axios.get("/api/role/" + account.data.publicKey)
-        localStorage.setItem("role", account.data.role)
+        const role = await axios.get("/api/role/" + account.data.publicKey)
+        localStorage.setItem("role", role.data.role)
         localStorage.setItem("currentAccount", account.data.publicKey)
       }
     }

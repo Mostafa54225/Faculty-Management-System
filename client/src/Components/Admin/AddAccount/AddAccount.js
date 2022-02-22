@@ -81,7 +81,7 @@ function AddAccount() {
                     Add Student
                   </Button>
                 </Box>
-                <Typography>OR</Typography>
+                <Typography align="center">OR</Typography>
                 <Box
                   display="flex"
                   alignItems="center"

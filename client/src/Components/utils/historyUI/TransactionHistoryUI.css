@@ -4,7 +4,7 @@
   background-color: white;
 
   border-radius: 10px;
-  box-shadow: 0px 1px 10px 1px black;
+  box-shadow: 0px 1px 5px 1px rgb(78, 78, 78);
   align-items: center;
   text-align: center;
   overflow: hidden;
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 180vh;
+  width: 120vh;
 }
 
 .upper-container {

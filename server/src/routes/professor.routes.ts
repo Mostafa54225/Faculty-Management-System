@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { addProfessor, assignProfessorToStudents, getProfessorByAddress, getProfessors, putProfessorAddress, setCourseStatus, viewStudentsAARelationship } from '../controllers/professor.controllers'
+import { addProfessor, assignProfessorToStudents, getProfessorByAddress, getProfessors, putProfessorAddress, setCourseStatus, viewCoursesRelationship, viewStudentsAARelationship } from '../controllers/professor.controllers'
 
 const router = Router()
 
@@ -9,6 +9,7 @@ router.post("/AddAccount", addProfessor)
 router.post("/AA/putStudents/:professorNationalId", assignProfessorToStudents)
 
 router.get("/AA/viewStudentsForAA/:professorNationalId", viewStudentsAARelationship)
+router.get("/viewCourses/:professorNationalId", viewCoursesRelationship)
 
 router.post("/AA/setCourseStatus/:professorNationalId", setCourseStatus)
 

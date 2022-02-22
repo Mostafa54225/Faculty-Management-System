@@ -28,7 +28,9 @@
     "babel-preset-stage-0": "^6.24.1",
     "concurrently": "^6.5.1",
     "cross-env": "^7.0.3",
+    "dom-to-image": "^2.6.0",
     "jest": "^27.3.1",
+    "jspdf": "^2.5.1",
     "nodemon": "^2.0.15",
     "password-salt-and-hash": "^1.0.5",
     "transform-runtime": "0.0.0"

@@ -53,7 +53,7 @@ function Login() {
             <Box>
               <TextField
                 label="password"
-                type="text"
+                type="password"
                 style={{ width: "400px" }}
                 onChange={onPasswordChange}
               ></TextField>

@@ -9,11 +9,12 @@ class Wallet {
     
     this.keyPair = ChainUtil.genKeyPair()
     this.publicKey = this.keyPair.getPublic().encode('hex')
-    this.role = 'user'
     // this.keyPair = ChainUtil.generateKeyPairRSA()
     // if(!roles.isAdmin(this.publicKey)) 
   }
 
+
+  
 
 
   toString() {

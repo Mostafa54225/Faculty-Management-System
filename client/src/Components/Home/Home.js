@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 import useRoles from "../utils/handleRoles"
-import { Button, Typography, Box, Grid } from "@material-ui/core"
+import { Button, Typography, Box, Grid, makeStyles } from "@material-ui/core"
+
+
+const useStyles = makeStyles({
+  button: {
+    backgroundColor: '#3c52b2',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#3c52b2',
+  },
+}})
 
 function Home() {
-  
+  const classes = useStyles()
+
   const location = useLocation()
-  const { currentAccount, role } = useRoles()
-  console.log(localStorage.getItem('role'))
-  console.log(role)  
-  // console.log(location.state)
+  // const { currentAccount, role } = useRoles()
+  const [role, setRole] = useState(localStorage.getItem('role'))
+  
   if (role === "admin") {
     return (
       <Box>
         <Grid container justifyContent="center">
           <Grid item>
-            <Box>
+            <Box mt={1}>
               <Typography variant="h3">Welcome</Typography>
               <Button
                 type="button"
                 variant="contained"
-                color="primary"
+                className={classes.button}
                 component={Link}
                 to={{ pathname: `/AdminHome` }}
               >

@@ -10,7 +10,7 @@ export class Student {
   studentName!: string
 
   @Column({unique: true})
-  studentNationalId!: number
+  studentNationalId!: string
 
   @Column()
   studentEmail!: string

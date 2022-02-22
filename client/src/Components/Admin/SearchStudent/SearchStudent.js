@@ -107,7 +107,7 @@ function SearchStudent() {
                   
                   <Link 
                       id="search"
-                      to={{pathname: `/studentHistory/${studentInfos.studentAddress}`}}
+                      to={{pathname: `/studentHistory/${studentInfos.studentAddress !== '' ? studentInfos.studentAddress : "0x00"}`}}
                       target="_blank"
                       className="btn btn-primary">Click to see the history</Link>
                   </Box>

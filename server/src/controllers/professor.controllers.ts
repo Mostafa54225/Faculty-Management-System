@@ -11,7 +11,7 @@ export const addProfessor = async(req: Request, res: Response) => {
     professorName: professorName,
     professorAddress: professorAddress,
     professorDepartment: professorDepartment,
-    professorNationalId: professorNationalId
+    professorNationalId: professorNationalId,
   })
 
   try {
@@ -78,6 +78,26 @@ export const assignProfessorToStudents = async(req: Request, res: Response) => {
   }
 }
 
+export const assignProfessorToCourses = async (req: Request, res: Response) => {
+  const professorNationalId  = req.params.professorNationalId
+  const professor = await getRepository(Professor).findOne({ professorNationalId: professorNationalId })
+  
+  // console.log(professor?.studentsForAA)
+  try {
+    if(professor) {
+      professor.courses = req.body.courses
+      await getRepository(Professor).save(professor)
+      res.status(200).send(professor)
+    } else {
+      res.status(400).send("Professor not found")
+    }
+  }
+  catch(error) {
+    res.status(400).send(error);
+    console.log(error)
+  }
+}
+
 export const viewStudentsAARelationship = async(req: Request, res: Response) => {
   try{
     const professor = await getRepository(Professor).createQueryBuilder("professor").leftJoinAndSelect("professor.studentsForAA", "student").getMany();
@@ -86,7 +106,16 @@ export const viewStudentsAARelationship = async(req: Request, res: Response) => 
   } catch(error) {
     res.sendStatus(400).send(error)
   }
-  
+}
+
+export const viewCoursesRelationship = async(req: Request, res: Response) => {
+  try {
+    const professor = await getRepository(Professor).createQueryBuilder("professor").leftJoinAndSelect("professor.courses", "course").getMany();
+    let prof = professor.filter(prof => prof.professorNationalId == req.params.professorNationalId)
+    res.json(prof)
+  } catch(error) {
+    res.sendStatus(400).send(error)
+  }
 }
 
 
