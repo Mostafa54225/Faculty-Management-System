@@ -151,8 +151,9 @@ export const getregisteredCourses = async (req: Request, res: Response) => {
   if(student){
     res.send(student.registeredCourses)
   }
-    
 }
+
+
 
 
 

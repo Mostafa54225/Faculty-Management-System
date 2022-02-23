@@ -10,9 +10,11 @@ const handleCourses = (data, level, semesterType, passedCourses, failedCourses) 
 
 
 const handleCoursesLevel1 = (data, semesterType, passedCourses) => {
+  
   if(parseInt(semesterType) === 1) return data.filter(data => data.level === 1 && data.term === semesterType)
   else if(parseInt(semesterType) === 2) {
     let courses = data.filter(data => data.level === 1 && data.term === 2)
+    
 
     // Check Prerequisite for the current courses
     checkPrerequisite(courses, passedCourses)

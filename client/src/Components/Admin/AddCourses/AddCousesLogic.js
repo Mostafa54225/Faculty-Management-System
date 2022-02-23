@@ -17,7 +17,7 @@ const useAddCourses = (currentAccount) => {
       if (isMounted) {
         try {
           const courses = await Axios.get("http://localhost:3001/courses/getCourses")
-          if(courses.data !== '') setIsCoursesUploaded(true)
+          if(courses.data.length !== 0) setIsCoursesUploaded(true)
         } catch (error) {
           console.log(error)
         }

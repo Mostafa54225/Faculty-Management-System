@@ -33,7 +33,6 @@ async function assignProfessorToCourses (professorId: number, course: Courses) {
   // const professor = await getRepository(Professor).findOne({ id: professorId })
   const professor = await getRepository(Professor).createQueryBuilder("professor").leftJoinAndSelect("professor.courses", "course").getMany();
   let prof = professor.filter(prof => prof.id == professorId)
-  console.log(prof)
   try {
     if(prof) {
       prof[0].courses.push(course)

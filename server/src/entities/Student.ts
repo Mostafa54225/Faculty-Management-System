@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { Professor } from './Professor'
+import { Registration } from './Registration'
 
 @Entity()
 export class Student {
@@ -48,6 +49,9 @@ export class Student {
     cascade: ['insert', 'update'],
   })
   academicAdvisor!: Professor
+
+  @OneToMany(type => Registration, registration => registration.student)
+  studentCourses!: Registration[]
   
 }
 

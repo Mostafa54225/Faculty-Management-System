@@ -52,16 +52,18 @@ const useRegisterCourse = (currentAccount) => {
         if(checkRegistrationTime(startRegistrationTime, endRegistrationTime)) {
           const ipfsHashCourses = await Axios.get('/api/getIPFSLinkCourses')
           
-          const result = await fetch(`https://ipfs.io/ipfs/${ipfsHashCourses.data}`)
+          const result = await Axios.get(`http://localhost:3001/courses/getCourses`)
           
-          const courses = await result.json()
-          
+          const courses = result.data
+          for(let i = 0; i < courses.length; i++) {
+            courses[i].prerequisite = JSON.parse(courses[i].prerequisite)
+          }
           setCourses(courses)
-
+          console.log(courses)
           setIsLoad(true)
           
           let openedCourses = handleCourses(courses, 1, semesterType, passedCourses, failedCourses)
-
+  
           await getStudentRegisteredCourses()
 
           setOpenCourses(openedCourses)
@@ -135,6 +137,7 @@ const useRegisterCourse = (currentAccount) => {
               courseStatus: "Pending"
             }
           })
+          
           Promise.all([
             await Axios.post('/api/transact', {
               courses

@@ -1,12 +1,13 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Professor } from "./Professor";
+import { Registration } from "./Registration";
 
 @Entity()
 export class Courses {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @PrimaryColumn()
   code!: string
 
   @Column()
@@ -41,4 +42,8 @@ export class Courses {
     cascade: ['insert', 'update'],
   })
   professor!: Professor
+
+
+  @OneToMany(type => Registration, registration => registration.course)
+  studentCourses!: Registration[]
 }

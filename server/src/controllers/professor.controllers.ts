@@ -119,13 +119,31 @@ export const viewCoursesRelationship = async(req: Request, res: Response) => {
 }
 
 
-
-
-
 interface Course {
   code: string,
   courseStatus: string,
 }
+
+export const getAllStudentsRegisteredCourse = async (req: Request, res: Response) => {
+  
+  const students = await getRepository(Student).find({ where: [
+    {studentLevel: parseInt(req.params.level)}
+  ], order: {studentId: "ASC"} })
+  let s = []
+  for (let i = 0  ; i < students.length ; i++){
+    if(students[i].registeredCourses != null){
+      const courses = JSON.parse(students[i].registeredCourses)
+      if(courses.filter((course: Course) => course.code === req.params.courseId).length > 0) {
+        s.push(students[i])
+      }
+    }
+  }
+  res.json(s)
+}
+
+
+
+
 
 export const setCourseStatus = async(req: Request, res: Response) => {
   try{

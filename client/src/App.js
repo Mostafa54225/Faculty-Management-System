@@ -17,9 +17,11 @@ import DropRegisteredCourse from "./Components/Student/DropRegisteredCourses/Dro
 
 import ProfessorHome from "./Components/Professor/ProfessorHome/ProfessorHome"
 import AcademicAdvisor from "./Components/Professor/AcademicAdvisor/AcademicAdvisor"
+import ProfessorCourses from "./Components/Professor/ProfessorCourses/ProfessorCourses"
 import AssignAA from "./Components/Admin/AssignAA/AssignAA"
 import axios from "axios"
 import TransactionHistory from "./Components/utils/historyUI/TransactionHistory"
+import MyCourse from "./Components/Professor/ProfessorCourses/StudentsInMyCourses/MyCourse"
 
 function App() {
   useEffect(() => {
@@ -84,15 +86,16 @@ function App() {
             )
           }
         />
-        <Route 
+        <Route
           path="/studentHistory/:studentAddress"
           element={
-            (localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "professor") ? (
+            localStorage.getItem("role") === "admin" ||
+            localStorage.getItem("role") === "professor" ? (
               <TransactionHistory />
             ) : (
-            <Navigate to="/" />
-            ) 
-          } 
+              <Navigate to="/" />
+            )
+          }
         />
 
         <Route
@@ -189,6 +192,27 @@ function App() {
           }
         />
 
+        <Route
+          path="/ProfessorHome/MyCourses"
+          element={
+            localStorage.getItem("role") === "professor" ? (
+              <ProfessorCourses />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/ProfessorHome/MyCourses/:level/:code"
+          element={
+            localStorage.getItem("role") === "professor" ? (
+              <MyCourse />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
