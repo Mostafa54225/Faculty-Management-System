@@ -3529,24 +3529,7 @@ for (var COLLECTION_NAME in DOMIterables) {
 
 handlePrototype(DOMTokenListPrototype, 'DOMTokenList');
 
-},{"../internals/global":"../../node_modules/canvg/node_modules/core-js/internals/global.js","../internals/dom-iterables":"../../node_modules/canvg/node_modules/core-js/internals/dom-iterables.js","../internals/dom-token-list-prototype":"../../node_modules/canvg/node_modules/core-js/internals/dom-token-list-prototype.js","../modules/es.array.iterator":"../../node_modules/canvg/node_modules/core-js/modules/es.array.iterator.js","../internals/create-non-enumerable-property":"../../node_modules/canvg/node_modules/core-js/internals/create-non-enumerable-property.js","../internals/well-known-symbol":"../../node_modules/canvg/node_modules/core-js/internals/well-known-symbol.js"}],"../../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
-},{}],"../../node_modules/canvg/node_modules/core-js/internals/array-reduce.js":[function(require,module,exports) {
+},{"../internals/global":"../../node_modules/canvg/node_modules/core-js/internals/global.js","../internals/dom-iterables":"../../node_modules/canvg/node_modules/core-js/internals/dom-iterables.js","../internals/dom-token-list-prototype":"../../node_modules/canvg/node_modules/core-js/internals/dom-token-list-prototype.js","../modules/es.array.iterator":"../../node_modules/canvg/node_modules/core-js/modules/es.array.iterator.js","../internals/create-non-enumerable-property":"../../node_modules/canvg/node_modules/core-js/internals/create-non-enumerable-property.js","../internals/well-known-symbol":"../../node_modules/canvg/node_modules/core-js/internals/well-known-symbol.js"}],"../../node_modules/canvg/node_modules/core-js/internals/array-reduce.js":[function(require,module,exports) {
 
 var global = require('../internals/global');
 var aCallable = require('../internals/a-callable');
@@ -13683,7 +13666,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "11483" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "8977" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

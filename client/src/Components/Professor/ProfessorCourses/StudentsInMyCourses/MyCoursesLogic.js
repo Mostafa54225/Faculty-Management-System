@@ -1,5 +1,6 @@
 import Axios from "axios"
 import { useState, useEffect } from 'react'
+import XLSX from "xlsx"
 
 
 const useMyCoursesLogic = (level, code) => {
@@ -20,8 +21,21 @@ const useMyCoursesLogic = (level, code) => {
     return () => isMounted = false
 
   }, [level, code])
+
+  const downloadExcel = () => {
+    const workSheet = XLSX.utils.json_to_sheet(students)
+    const workBook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workBook, workSheet, "students")
+    let buffer = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" })
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
+
+    XLSX.writeFile(workBook, "students.xlsx")
+  }
+
+
   return {
-    students
+    students,
+    downloadExcel
   }
 }
 

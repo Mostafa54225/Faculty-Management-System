@@ -9,7 +9,7 @@ class Transaction {
   }
 
 
-  static newTransaction(senderWallet, data) {
+  static newTransaction(senderWallet, data, transactionType) {
     const transaction = new this()
 
 
@@ -19,6 +19,7 @@ class Transaction {
     // ])
 
     transaction.outputs = {
+      transactionType,
       data,
       address: senderWallet.publicKey,
     }

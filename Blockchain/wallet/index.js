@@ -52,12 +52,12 @@ class Wallet {
 
   }
 
-  createTransaction(data, transactionPool) {
+  createTransaction(data, transactionPool, transactionType) {
     // console.log("Private Key: " + this.keyPair.getPrivate().toString('hex'))
     // console.log("Public Key: " + this.publicKey)
     // console.log(this.pk)
     let transaction = transactionPool.existingTransaction(this.publicKey)
-    transaction = Transaction.newTransaction(this, data)
+    transaction = Transaction.newTransaction(this, data, transactionType)
     transactionPool.AddTransaction(transaction)
     
     return transaction

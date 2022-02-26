@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import useMyCoursesLogic from "./MyCoursesLogic"
 import { useParams } from "react-router-dom"
-
 import {
   Grid,
   Paper,
@@ -13,15 +12,24 @@ import {
   TableBody,
   Table,
   Button,
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core"
+import MaterialTable from "material-table"
+import { PatchedPagination } from "./PatchedPagination"
 
 const MyCourse = () => {
-  const {level, code} = useParams()
-  const { students } = useMyCoursesLogic(level, code)
-  console.log(students)
+  const { level, code } = useParams()
+  const { students, downloadExcel } = useMyCoursesLogic(level, code)
 
-  if(students !== undefined){
+  const columns = [
+    { title: "Student Name", field: "studentName" },
+    { title: "Student Id", field: "studentId" },
+    { title: "Student National Id", field: "studentNationalId" },
+    { title: "Student Level", field: "studentLevel" },
+  ]
+
+  
+  if (students !== undefined) {
     return (
       <>
         <Grid container spacing={1} justifyContent="center">
@@ -31,7 +39,27 @@ const MyCourse = () => {
             </Typography>
             <Paper>
               <Grid>
-                <TableContainer component={Paper}>
+                <MaterialTable
+                  // options={{ paging: false }}
+                  options={{
+                    tableLayout: "fixed",
+                  }}
+                  components={{
+                    Pagination: PatchedPagination,
+                  }}
+                  title="student details"
+                  columns={columns}
+                  data={students}
+                  actions={[
+                    {
+                      icon: () => <Button>Export</Button>,
+                      tooltip: "Export to Excel",
+                      onClick: () => downloadExcel(),
+                      isFreeAction: true,
+                    },
+                  ]}
+                />
+                {/* <TableContainer component={Paper} >
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
@@ -52,7 +80,7 @@ const MyCourse = () => {
                       ))}
                     </TableBody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </Grid>
             </Paper>
           </Grid>
@@ -61,7 +89,6 @@ const MyCourse = () => {
     )
   }
   return <CircularProgress />
-
 }
 
 export default MyCourse

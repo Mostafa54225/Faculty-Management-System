@@ -59,7 +59,6 @@ const useRegisterCourse = (currentAccount) => {
             courses[i].prerequisite = JSON.parse(courses[i].prerequisite)
           }
           setCourses(courses)
-          console.log(courses)
           setIsLoad(true)
           
           let openedCourses = handleCourses(courses, 1, semesterType, passedCourses, failedCourses)
@@ -140,7 +139,8 @@ const useRegisterCourse = (currentAccount) => {
           
           Promise.all([
             await Axios.post('/api/transact', {
-              courses
+              courses,
+              type: "registerCourses",
             }),
             await Axios.post("http://localhost:3001/students/registerCourses/" + studentDetails.studentNationalId, {
               registeredCourses: JSON.stringify(courses)

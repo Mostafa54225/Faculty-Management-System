@@ -6,8 +6,9 @@ import {
   CircularProgress,
   makeStyles
 } from "@material-ui/core"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import useRegisterCourse from "../RegisterCourses/RegisterCourseLogic"
 import useStudentHomeLogic from "./StudentHomeLogic"
 
 const useStyles = makeStyles({
@@ -21,12 +22,24 @@ const useStyles = makeStyles({
 }})
 
 function StudentHome(props) {
-  const classes = useStyles()
-
-  // const { currentAccount, role } = useRoles()
   const [currentAccount, setCurrentAccount] = useState(
     localStorage.getItem("currentAccount")
   )
+  const classes = useStyles()
+  const { checkRegistrationTime, startRegistrationTime, endRegistrationTime, } = useRegisterCourse(currentAccount)
+  // const { currentAccount, role } = useRoles()
+  useEffect(() => {
+    if(document.getElementById("register-course-button") !== null){
+      if(checkRegistrationTime(startRegistrationTime, endRegistrationTime)){
+        document.getElementById("register-course-button").style.display = "block"
+        document.getElementById("drop-courses-button").style.display = "none"
+      } else {
+        document.getElementById("drop-courses-button").style.display = "block"
+        document.getElementById("register-course-button").style.display = "none"
+      } 
+    }
+  })
+  
   // const [role, setRole] = useState(localStorage.getItem("role"))
 
   const { studentDetails } = useStudentHomeLogic(currentAccount)
@@ -48,8 +61,10 @@ function StudentHome(props) {
                 <Button
                   type="button"
                   variant="contained"
+                  id="register-course-button"
                   className={classes.button}
                   component={Link}
+                  disabled={!checkRegistrationTime(startRegistrationTime, endRegistrationTime)}
                   to={{
                     pathname: `${window.location.pathname}/registerCourses`,
                   }}
@@ -79,8 +94,10 @@ function StudentHome(props) {
                 <Button
                   type="button"
                   variant="contained"
+                  id="drop-courses-button"
                   className={classes.button}
                   component={Link}
+                  disabled={checkRegistrationTime(startRegistrationTime, endRegistrationTime)}
                   to={{
                     pathname: `${window.location.pathname}/dropRegisteredCourses`,
                   }}

@@ -31,6 +31,7 @@ function TransactionHistory() {
       </Typography>
     )
   }
+  
   if (studentHistory.length !== 0 && studentDetails !== undefined) {
     return (
       <>
@@ -98,6 +99,15 @@ function TransactionHistory() {
               </div>
               <hr></hr>
 
+              <div className="Transaction Type">
+                <h5 className="field"> Transaction Type: </h5>{" "}
+                <p className="value" style={{fontWeight: 'bold'}}>
+                  {" "}
+                  {transaction.outputs.transactionType}
+                </p>
+              </div>
+              <hr></hr>
+
               <div className="Signature">
                 <h5 className="field"> Signature </h5>
                 <div className="r">
@@ -120,7 +130,7 @@ function TransactionHistory() {
               <div className="Data">
                 <h5 className="field"> Courses: </h5>{" "}
                 <h5 className="value">
-                  {transaction.outputs.data.courses.map((course, index) => (
+                  {transaction.outputs.data.map((course, index) => (
                     <div key={index}>{course.name}</div>
                   ))}{" "}
                 </h5>
