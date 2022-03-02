@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { addProfessor, getAllStudentsRegisteredCourse, assignProfessorToStudents, getProfessorByAddress, getProfessors, putProfessorAddress, setCourseStatus, viewCoursesRelationship, viewStudentsAARelationship } from '../controllers/professor.controllers'
+import { addProfessor, putMidTermGradeForStudents, assignProfessorToStudents, getProfessorByAddress, getProfessors, putProfessorAddress, setCourseStatus, viewCoursesRelationship, viewStudentsAARelationship } from '../controllers/professor.controllers'
 
 const router = Router()
 
@@ -17,6 +17,6 @@ router.post("/putProfessorAddress/:id", putProfessorAddress)
 
 router.get("/getProfessor/:professorAddress", getProfessorByAddress)
 
-router.get("/getMyStudents/:level/:courseId", getAllStudentsRegisteredCourse)
-
+// router.get("/getMyStudents/:level/:courseId", getAllStudentsRegisteredCourse)
+router.put("/putStudentsMidTermGrade", putMidTermGradeForStudents)
 export default router

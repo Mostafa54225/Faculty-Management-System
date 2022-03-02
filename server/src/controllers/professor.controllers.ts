@@ -99,10 +99,14 @@ export const assignProfessorToCourses = async (req: Request, res: Response) => {
   }
 }
 
+interface StudentsAA {
+  
+}
 export const viewStudentsAARelationship = async(req: Request, res: Response) => {
   try{
     const professor = await getRepository(Professor).createQueryBuilder("professor").leftJoinAndSelect("professor.studentsForAA", "student").getMany();
     let prof = professor.filter(prof => prof.professorNationalId == req.params.professorNationalId)
+    const c = []
     for(let i = 0; i < prof[0].studentsForAA.length; i++) {
       const registeredCourses = 
         await getRepository(Registration).
@@ -110,12 +114,32 @@ export const viewStudentsAARelationship = async(req: Request, res: Response) => 
         leftJoinAndSelect("registration.course", "course")
         .where("registration.collegeId = :studentId", { studentId: prof[0].studentsForAA[i].studentId })
         .getMany()
-      prof[0].studentsForAA[i].registeredCourses = JSON.stringify(registeredCourses)
+        c.push(registeredCourses)
     }
-    res.send(prof[0].studentsForAA)
+    const students = prof[0].studentsForAA
+    res.send({
+      students,
+      c
+    })
   } catch(error) {
     res.sendStatus(400).send(error)
   }
+}
+
+export const putMidTermGradeForStudents = async(req: Request, res: Response) => {
+  const { studentId, courseCode, midTermGrade } = req.body
+  for(let i = 0; i < req.body.studentId.length; i++) {
+    try {
+      await getRepository(Registration).createQueryBuilder()
+      .update(Registration)
+      .set({midTermGrade: midTermGrade[i]})
+      .where("collegeId = :studentId AND courseCode = :courseCode", { studentId: studentId[i], courseCode: courseCode })
+      .execute()
+    } catch(error) {
+      res.status(400).send(error)
+    }
+  }
+  res.sendStatus(200)
 }
 
 export const viewCoursesRelationship = async(req: Request, res: Response) => {
@@ -134,22 +158,22 @@ interface Course {
   courseStatus: string,
 }
 
-export const getAllStudentsRegisteredCourse = async (req: Request, res: Response) => {
+// export const getAllStudentsRegisteredCourse = async (req: Request, res: Response) => {
   
-  const students = await getRepository(Student).find({ where: [
-    {studentLevel: parseInt(req.params.level)}
-  ], order: {studentId: "ASC"} })
-  let s = []
-  for (let i = 0  ; i < students.length ; i++){
-    if(students[i].registeredCourses != null){
-      const courses = JSON.parse(students[i].registeredCourses)
-      if(courses.filter((course: Course) => course.code === req.params.courseId).length > 0) {
-        s.push(students[i])
-      }
-    }
-  }
-  res.json(s)
-}
+//   const students = await getRepository(Student).find({ where: [
+//     {studentLevel: parseInt(req.params.level)}
+//   ], order: {studentId: "ASC"} })
+//   let s = []
+//   for (let i = 0  ; i < students.length ; i++){
+//     if(students[i].registeredCourses != null){
+//       const courses = JSON.parse(students[i].registeredCourses)
+//       if(courses.filter((course: Course) => course.code === req.params.courseId).length > 0) {
+//         s.push(students[i])
+//       }
+//     }
+//   }
+//   res.json(s)
+// }
 
 
 

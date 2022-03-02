@@ -11,6 +11,7 @@ import {
   TableCell,
   TableBody,
   Table,
+  Box,
   Button,
   CircularProgress,
 } from "@material-ui/core"
@@ -19,17 +20,21 @@ import { PatchedPagination } from "./PatchedPagination"
 
 const MyCourse = () => {
   const { level, code } = useParams()
-  const { students, downloadExcel } = useMyCoursesLogic(level, code)
+  const { students, downloadExcel, captureFile } = useMyCoursesLogic(
+    level,
+    code
+  )
 
   const columns = [
-    { title: "Student Name", field: "studentName" },
-    { title: "Student Id", field: "studentId" },
-    { title: "Student National Id", field: "studentNationalId" },
-    { title: "Student Level", field: "studentLevel" },
+    { title: "Student Name", field: "student.studentName" },
+    { title: "Student Id", field: "student.studentId" },
+    { title: "Student National Id", field: "student.studentNationalId" },
+    { title: "Student Level", field: "student.studentLevel" },
+    { title: "Midterm Grade", field: "midTermGrade" },
   ]
 
-  
   if (students !== undefined) {
+    console.log(students)
     return (
       <>
         <Grid container spacing={1} justifyContent="center">
@@ -37,10 +42,39 @@ const MyCourse = () => {
             <Typography variant="h3" align="center">
               My Students in {code}
             </Typography>
+            {students.length > 0 ? (
+              <Paper>
+                <Box m={2} p={5} alignItems="center">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Typography variant="h6">Upload Grade File</Typography>
+                  </Box>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    mt={2}
+                    mb={2}
+                  >
+                    <input
+                      accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      type="file"
+                      onChange={(e) => {
+                        const file = e.target.files[0]
+                        captureFile(file, code)
+                      }}
+                    ></input>
+                  </Box>
+                </Box>
+              </Paper>
+            ) : null}
+
             <Paper>
               <Grid>
                 <MaterialTable
-                  // options={{ paging: false }}
                   options={{
                     tableLayout: "fixed",
                   }}

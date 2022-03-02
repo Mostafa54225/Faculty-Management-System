@@ -41,9 +41,6 @@ export class Student {
   @Column({nullable: true})
   academicAdvisorId!: number
 
-  
-  @Column({length: 65535, nullable: true})
-  registeredCourses!: string
 
   @ManyToOne(type => Professor, professor => professor.studentsForAA, {
     cascade: ['insert', 'update'],

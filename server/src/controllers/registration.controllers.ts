@@ -28,7 +28,8 @@ export const registerCourse = async(req: Request, res: Response) => {
       const registration = getRepository(Registration).create({
         student: student,
         course: course,
-        collegeId: studentId
+        collegeId: studentId,
+        courseCode: registeredCourses[i].code,
       })
       await getRepository(Registration).save(registration)
     }
@@ -37,6 +38,17 @@ export const registerCourse = async(req: Request, res: Response) => {
     res.status(400).send(error)
   }
 }
+
+export const getAllStudentsRegisteredInCourse = async(req: Request, res: Response) => {
+  try{
+    const registration = await getRepository(Registration).createQueryBuilder("registration").leftJoinAndSelect("registration.student", "student").leftJoinAndSelect("registration.course", "course").where("registration.courseCode = :courseCode", { courseCode: req.params.courseCode }).getMany();
+    res.send(registration)
+  } catch(error) {
+    res.status(400).send(error)
+  }
+}
+
+
 
 export const getStudentSubjects = async(req: Request, res: Response) => {
   const studentId = parseInt(req.params.studentId)

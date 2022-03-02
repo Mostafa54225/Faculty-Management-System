@@ -25,4 +25,7 @@ export class Registration {
 
   @Column()
   collegeId!: number;
+
+  @Column()
+  courseCode!: string;
 }

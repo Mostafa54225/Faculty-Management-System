@@ -12,16 +12,11 @@ const useAcademicAdvisor = (professorDetails) => {
         if (professorDetails !== undefined) {
           const url = "http://localhost:3001/professors/AA/viewStudentsForAA/" + parseInt(professorDetails.professorNationalId)
           let result = await Axios.get(url)
-          result.data.map(
-            (student) =>
-              (student.registeredCourses = JSON.parse(
-                student.registeredCourses
-              ))
-          )
-          result.data.sort((a, b) => a.studentId - b.studentId)
           
-          setStudents(result.data)
+          const arr = result.data.students.map((item, i) => Object.assign({}, item, { ["registeredCourses"]: result.data.c[i] }))
           
+          arr.sort((a, b) => a.studentId - b.studentId)
+          setStudents(arr)
         }
       }
     }

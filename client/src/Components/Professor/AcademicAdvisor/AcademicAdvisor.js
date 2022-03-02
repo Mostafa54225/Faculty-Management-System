@@ -21,7 +21,7 @@ function AcademicAdvisor() {
   const { professorDetails } = useProfessorDetails(currentAccount)
   
   const { students, setCourseStatus } = useAcademicAdvisor(professorDetails)
-
+  
   if(students !== undefined && professorDetails !== undefined) {
     return (
       <>
@@ -59,7 +59,7 @@ function AcademicAdvisor() {
 
 
 function Row(props) {
-  const { row, setCourseStatus, getStudentRegisteredCourses } = props
+  const { row, setCourseStatus } = props
   const [open, setOpen] = useState(false)
   
   return (

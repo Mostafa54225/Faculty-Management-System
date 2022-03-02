@@ -129,28 +129,28 @@ export const getStudentsByLevel = async (req: Request, res: Response) => {
 
 
 
-export const registerCourses = async (req: Request, res: Response) => {
-  try {
-    getRepository(Student).createQueryBuilder().update(Student)
-    .set({registeredCourses: req.body.registeredCourses})
-    .where({studentNationalId: req.params.NID}).execute();
+// export const registerCourses = async (req: Request, res: Response) => {
+//   try {
+//     getRepository(Student).createQueryBuilder().update(Student)
+//     .set({registeredCourses: req.body.registeredCourses})
+//     .where({studentNationalId: req.params.NID}).execute();
     
-    res.sendStatus(200)
-  } catch(error) {
-    console.log(error)
-    res.sendStatus(400)
-  }
-}
+//     res.sendStatus(200)
+//   } catch(error) {
+//     console.log(error)
+//     res.sendStatus(400)
+//   }
+// }
 
-export const getregisteredCourses = async (req: Request, res: Response) => {
-  const student = await getRepository(Student).findOne({ where: [
-    {studentNationalId: req.params.id},
-    {studentId: req.params.id}
-  ]})
-  if(student){
-    res.send(student.registeredCourses)
-  }
-}
+// export const getregisteredCourses = async (req: Request, res: Response) => {
+//   const student = await getRepository(Student).findOne({ where: [
+//     {studentNationalId: req.params.id},
+//     {studentId: req.params.id}
+//   ]})
+//   if(student){
+//     res.send(student.registeredCourses)
+//   }
+// }
 
 
 
