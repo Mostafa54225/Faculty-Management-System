@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Courses } from "./Courses";
 import { Student } from "./Student";
 
@@ -16,4 +16,13 @@ export class Registration {
   @ManyToOne(type => Courses, course => course.studentCourses)
   @JoinColumn([{name: "courseId", referencedColumnName: "id"}])
   course!: Courses
+
+  @Column({default: 'Peding'})
+  courseStatus!: string
+
+  @Column()
+  midTermGrade!: number;
+
+  @Column()
+  collegeId!: number;
 }

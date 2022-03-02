@@ -13,12 +13,16 @@ import {
 } from "@material-ui/core"
 import useShowRegisteredCoursesLogic from "./ShowRegisteredCoursesLogic"
 import useRoles from "../../utils/handleRoles"
+import useStudentHomeLogic from '../StudentHome/StudentHomeLogic'
 
 function ShowRegisteredCourses() {
-  // const { currentAccount, role } = useRoles()
+  
   const [currentAccount, setCurrentAccount] = useState(localStorage.getItem("currentAccount"))
-  // const [role, setRole] = useState(localStorage.getItem("role"))
-  const { registeredCourses } = useShowRegisteredCoursesLogic(currentAccount)
+  const { studentDetails } = useStudentHomeLogic(currentAccount)
+
+
+  
+  const { registeredCourses } = useShowRegisteredCoursesLogic(studentDetails)
   
   if (registeredCourses.length !== 0) {
     return (
@@ -42,15 +46,15 @@ function ShowRegisteredCourses() {
                     {}
                     <TableBody>
                       {registeredCourses.map((course) => (
-                        <TableRow key={course.code}>
+                        <TableRow key={course.course.code}>
                           <TableCell component="th" scope="row" >
-                            {course.code}
+                            {course.course.code}
                           </TableCell>
                           <TableCell component="th" scope="row">
-                            {course.name}
+                            {course.course.name}
                           </TableCell>
                           <TableCell align="center">
-                            {course.courseHours}
+                            {course.course.courseHours}
                           </TableCell>
                           <TableCell align="center">
                             {course.courseStatus}

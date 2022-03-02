@@ -19,7 +19,9 @@ const useAcademicAdvisor = (professorDetails) => {
               ))
           )
           result.data.sort((a, b) => a.studentId - b.studentId)
+          
           setStudents(result.data)
+          
         }
       }
     }
@@ -29,6 +31,7 @@ const useAcademicAdvisor = (professorDetails) => {
 
   // set course status
   const setCourseStatus = async (courseCode, studentID, courseStatus) => {
+    
     try {
       await Axios.post("http://localhost:3001/professors/AA/setCourseStatus/" + parseInt(professorDetails.professorNationalId), {
         studentId: studentID,
@@ -42,21 +45,10 @@ const useAcademicAdvisor = (professorDetails) => {
     }
   }
 
-  const getStudentRegisteredCourses = async (studentAddress) => {
-    if(studentAddress !== "") {
-      try {
-        const result = await Axios.get("/api/address/" + studentAddress)
-        console.log(result.data)
-      } catch(error) {
-        console.log(error)
-      }
-    } else {
-      showNotification("Error", "student address Not Found", "danger")
-    }
-  }
 
 
-  return { students, setCourseStatus, getStudentRegisteredCourses }
+
+  return { students, setCourseStatus }
 }
 
 

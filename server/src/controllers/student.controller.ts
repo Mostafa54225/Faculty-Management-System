@@ -6,7 +6,6 @@ import { Student } from '../entities/Student'
 const nodemailer = require("nodemailer")
 
 
-
 export const getStudentById = async (req: Request, res: Response) => {
     const student = await getRepository(Student).findOne({ where: [
       {studentNationalId: req.params.id},

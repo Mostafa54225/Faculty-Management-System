@@ -34,6 +34,8 @@ export class Courses {
   @Column()
   term!: number
 
+  
+
 
   @Column({nullable: true})
   professorId!: number

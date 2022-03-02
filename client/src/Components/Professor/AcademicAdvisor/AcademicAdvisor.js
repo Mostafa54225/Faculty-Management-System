@@ -20,7 +20,7 @@ function AcademicAdvisor() {
   
   const { professorDetails } = useProfessorDetails(currentAccount)
   
-  const { students, setCourseStatus, getStudentRegisteredCourses } = useAcademicAdvisor(professorDetails)
+  const { students, setCourseStatus } = useAcademicAdvisor(professorDetails)
 
   if(students !== undefined && professorDetails !== undefined) {
     return (
@@ -41,7 +41,7 @@ function AcademicAdvisor() {
 
                   <TableBody>
                     {students.map((row) => (
-                      <Row key={row.studentId} row={row} setCourseStatus={setCourseStatus} getStudentRegisteredCourses={getStudentRegisteredCourses} />
+                      <Row key={row.studentId} row={row} setCourseStatus={setCourseStatus} />
                     ))}
                   </TableBody>
                 </Table>
@@ -61,7 +61,7 @@ function AcademicAdvisor() {
 function Row(props) {
   const { row, setCourseStatus, getStudentRegisteredCourses } = props
   const [open, setOpen] = useState(false)
-
+  
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -102,22 +102,23 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {row.registeredCourses !== null ? row.registeredCourses.map((course) => (
-                    <TableRow key={course.code}>
+                    <TableRow key={course.course.code}>
                       <TableCell component="th" scope="row">
-                        {course.name}
+                        {course.course.name}
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        {course.code}
+                        {course.course.code}
                       </TableCell>
                       <TableCell>
                         <Button 
                         onClick={ async () => {
-                          setCourseStatus(course.code, row.studentId, "Passed")
+                          
+                          setCourseStatus(course.course.code, row.studentId, "Passed")
                         }}
                         style={{ outline: 'none', margin: '5px', backgroundColor: "green", color: "floralwhite" }}
                         >Pass</Button>
                         <Button 
-                        onClick={() => setCourseStatus(course.code, row.studentId, "Warning")}
+                        onClick={() => setCourseStatus(course.course.code, row.studentId, "Warning")}
                         style={{ outline: 'none', backgroundColor: "Red", color: "floralwhite" }}>Warn</Button>
                       </TableCell>
                       <TableCell>{course.courseStatus}</TableCell>

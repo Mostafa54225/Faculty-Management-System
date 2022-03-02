@@ -142,8 +142,9 @@ const useRegisterCourse = (currentAccount) => {
               courses,
               type: "registerCourses",
             }),
-            await Axios.post("http://localhost:3001/students/registerCourses/" + studentDetails.studentNationalId, {
-              registeredCourses: JSON.stringify(courses)
+            await Axios.post("http://localhost:3001/registeration/registerCourses/", {
+              registeredCourses: courses,
+              studentId: studentDetails.studentId
             }),
             await Axios.get("/api/mine-transactions")
           ])
@@ -158,13 +159,10 @@ const useRegisterCourse = (currentAccount) => {
   }
 
   const getStudentRegisteredCourses = async () => {
-    let registeredCourses = await Axios.get('/api/getAddressTransactions/' + currentAccount) 
-    if(registeredCourses.data.length === 0) {
-      registeredCourses =  await Axios.get('/api/address/' + currentAccount)
-    }
+    let registeredCourses =  await Axios.get('/api/address/' + currentAccount)
     if(registeredCourses.data.length !== 0) {
       const length = registeredCourses.data.length
-      const courses =  registeredCourses.data[length - 1].outputs.data.courses
+      const courses =  registeredCourses.data[length - 1].outputs.data
       
       let codes = []
       for(let i = 0; i < courses.length; i++) {

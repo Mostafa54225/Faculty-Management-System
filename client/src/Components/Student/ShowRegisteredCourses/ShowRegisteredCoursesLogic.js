@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Axios from "axios"
 
-const useShowRegisteredCoursesLogic = (currentAccount) => {
+const useShowRegisteredCoursesLogic = (studentDetails) => {
   const [registeredCourses, setRegisteredCourses] = useState([])
   useEffect(() => {
     let mounted = true
@@ -14,11 +14,14 @@ const useShowRegisteredCoursesLogic = (currentAccount) => {
         // const length = r.data.length
         // const courses = r.data[length - 1].outputs.data.courses
         try {
-          let result = await Axios.get("http://localhost:3001/students/getStudentByAddress/" + currentAccount)
-          if(result.data !== "") {
-            if(result.data.registeredCourses !== null) {
-              let regCourses = JSON.parse(result.data.registeredCourses)
-              setRegisteredCourses(regCourses)
+          if(studentDetails !== undefined){
+            console.log(studentDetails.studentId)
+            let result = await Axios.get(`http://localhost:3001/registeration/getStudentSubjects/${studentDetails.studentId}`)
+            if(result.data !== []) {
+              if(result.data.registeredCourses !== null) {
+                console.log(result.data)
+                setRegisteredCourses(result.data)
+              }
             }
           }
           
@@ -29,7 +32,7 @@ const useShowRegisteredCoursesLogic = (currentAccount) => {
     }
     fetchData()
     return () => (mounted = false)
-  }, [currentAccount])
+  }, [studentDetails])
 
   return { registeredCourses }
 }

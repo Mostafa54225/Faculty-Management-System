@@ -17,7 +17,6 @@ router.post("/putProfessorAddress/:id", putProfessorAddress)
 
 router.get("/getProfessor/:professorAddress", getProfessorByAddress)
 
-
 router.get("/getMyStudents/:level/:courseId", getAllStudentsRegisteredCourse)
 
 export default router

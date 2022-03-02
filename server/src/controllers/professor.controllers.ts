@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Any, createQueryBuilder, getRepository, SimpleConsoleLogger } from "typeorm";
 import { Professor } from "../entities/Professor";
+import { Registration } from "../entities/Registration";
 import { Student } from "../entities/Student";
 
 
@@ -102,7 +103,16 @@ export const viewStudentsAARelationship = async(req: Request, res: Response) => 
   try{
     const professor = await getRepository(Professor).createQueryBuilder("professor").leftJoinAndSelect("professor.studentsForAA", "student").getMany();
     let prof = professor.filter(prof => prof.professorNationalId == req.params.professorNationalId)
-    res.send(prof[0].studentsForAA)  
+    for(let i = 0; i < prof[0].studentsForAA.length; i++) {
+      const registeredCourses = 
+        await getRepository(Registration).
+        createQueryBuilder("registration").
+        leftJoinAndSelect("registration.course", "course")
+        .where("registration.collegeId = :studentId", { studentId: prof[0].studentsForAA[i].studentId })
+        .getMany()
+      prof[0].studentsForAA[i].registeredCourses = JSON.stringify(registeredCourses)
+    }
+    res.send(prof[0].studentsForAA)
   } catch(error) {
     res.sendStatus(400).send(error)
   }
@@ -144,7 +154,6 @@ export const getAllStudentsRegisteredCourse = async (req: Request, res: Response
 
 
 
-
 export const setCourseStatus = async(req: Request, res: Response) => {
   try{
     const professor = await getRepository(Professor).createQueryBuilder("professor").leftJoinAndSelect("professor.studentsForAA", "student").getMany();
@@ -152,16 +161,28 @@ export const setCourseStatus = async(req: Request, res: Response) => {
     if(prof) {
       let student = prof.studentsForAA.find(student => student.studentId == parseInt(req.body.studentId))
       if(student){
-
-        let courses = JSON.parse(student.registeredCourses)
-        courses.forEach((course: Course) => {
-          if(course.code == req.body.courseCode) {
+        
+        const registeredCourses = 
+        await getRepository(Registration).
+        createQueryBuilder("registration").
+        leftJoinAndSelect("registration.course", "course")
+        .where("registration.collegeId = :studentId", { studentId: req.body.studentId })
+        .getMany()
+        registeredCourses.forEach(course => {
+          if(course.course.code == req.body.courseCode) {
             course.courseStatus = req.body.courseStatus
           }
         })
-        let stringifyCourses = JSON.stringify(courses)
-        getRepository(Student).createQueryBuilder().update(Student).set({registeredCourses: stringifyCourses})
-        .where("studentId = :studentId", {studentId: student.studentId}).execute()
+        getRepository(Registration).save(registeredCourses)
+        // let courses = JSON.parse(student.registeredCourses)
+        // courses.forEach((course: Course) => {
+        //   if(course.code == req.body.courseCode) {
+        //     course.courseStatus = req.body.courseStatus
+        //   }
+        // })
+        // let stringifyCourses = JSON.stringify(courses)
+        // getRepository(Student).createQueryBuilder().update(Student).set({registeredCourses: stringifyCourses})
+        // .where("studentId = :studentId", {studentId: student.studentId}).execute()
 
         res.sendStatus(200)
       }
