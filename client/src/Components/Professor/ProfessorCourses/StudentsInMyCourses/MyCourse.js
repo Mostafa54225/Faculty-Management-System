@@ -34,7 +34,7 @@ const MyCourse = () => {
   ]
 
   if (students !== undefined) {
-    console.log(students)
+    
     return (
       <>
         <Grid container spacing={1} justifyContent="center">

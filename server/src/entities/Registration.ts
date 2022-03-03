@@ -20,7 +20,7 @@ export class Registration {
   @Column({default: 'Peding'})
   courseStatus!: string
 
-  @Column()
+  @Column({type: "float"})
   midTermGrade!: number;
 
   @Column()

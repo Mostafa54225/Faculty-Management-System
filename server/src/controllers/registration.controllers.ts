@@ -49,7 +49,6 @@ export const getAllStudentsRegisteredInCourse = async(req: Request, res: Respons
 }
 
 
-
 export const getStudentSubjects = async(req: Request, res: Response) => {
   const studentId = parseInt(req.params.studentId)
   try{

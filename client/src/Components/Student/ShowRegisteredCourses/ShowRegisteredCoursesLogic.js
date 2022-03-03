@@ -15,11 +15,11 @@ const useShowRegisteredCoursesLogic = (studentDetails) => {
         // const courses = r.data[length - 1].outputs.data.courses
         try {
           if(studentDetails !== undefined){
-            console.log(studentDetails.studentId)
+            
             let result = await Axios.get(`http://localhost:3001/registeration/getStudentSubjects/${studentDetails.studentId}`)
             if(result.data !== []) {
               if(result.data.registeredCourses !== null) {
-                console.log(result.data)
+                 
                 setRegisteredCourses(result.data)
               }
             }

@@ -14,7 +14,6 @@ const useMyCoursesLogic = (level, code) => {
         const students = await Axios.get(
           `http://localhost:3001/registeration/getAllStudentsRegisteredInCourse/${code}`
         )
-        console.log(students.data)
         setStudents(students.data)
       }
     }
@@ -53,6 +52,7 @@ const useMyCoursesLogic = (level, code) => {
         arrStudentId.push(Object.values(data[i])[0])
         arrGrades.push(Object.values(data[i])[1])
       }
+      console.log(arrGrades)
       uploadGrades(arrStudentId, arrGrades, code)
     })
   }
