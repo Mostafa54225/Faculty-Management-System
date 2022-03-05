@@ -88,6 +88,28 @@ function Home() {
       </Box>
     )
   }
+  if(role === "control") {
+    return (
+      <Box>
+        <Grid container justifyContent="center">
+          <Grid item>
+            <Box>
+              <Typography variant="h3">Welcome</Typography>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                component={Link}
+                to={{ pathname: `/ControlHome` }}
+              >
+                Login
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    )
+  }
   return (
     <Box>
       <Grid container justifyContent="center">

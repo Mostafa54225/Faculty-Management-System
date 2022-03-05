@@ -19,7 +19,7 @@ const useLoginLogic = (currentAccount) => {
   }
 
   const activateAccount = async () => {
-    if (parseInt(nationalID) === 1) {
+    if (parseInt(nationalID) === 1 && password === "FCIH") {
       await Axios.post("/api/makeRole", {
         address: currentAccount,
         roleName: "admin",
@@ -54,6 +54,14 @@ const useLoginLogic = (currentAccount) => {
               "http://localhost:3001/professors/putProfessorAddress/" + nationalID, 
               {
                 professorAddress: currentAccount,
+              }
+            )
+          }
+          if(result.data.roleName === "control") {
+            await Axios.put(
+              "http://localhost:3001/control/putControlAddress/" + nationalID,
+              {
+                controlAddress: currentAccount,
               }
             )
           }

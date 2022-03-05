@@ -8,6 +8,7 @@ import semesterRouter from './routes/semester.routes'
 import rolesRouter from './routes/roles.routes'
 import coursesRouter from './routes/courses.routes'
 import registrationRouter from './routes/registration.routes'
+import controlRouter from './routes/control.routes'
 
 createConnection().then(connection => {
   
@@ -23,6 +24,7 @@ createConnection().then(connection => {
   app.use('/roles', rolesRouter)
   app.use('/courses', coursesRouter)
   app.use("/registeration", registrationRouter)
+  app.use("/control", controlRouter)
   app.listen(3001, () => {
     console.log("Server is running on port 3001")
   })

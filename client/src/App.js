@@ -22,6 +22,7 @@ import AssignAA from "./Components/Admin/AssignAA/AssignAA"
 import axios from "axios"
 import TransactionHistory from "./Components/utils/historyUI/TransactionHistory"
 import MyCourse from "./Components/Professor/ProfessorCourses/StudentsInMyCourses/MyCourse"
+import ControlHome from "./Components/Control/ControlHome/ControlHome"
 
 function App() {
   useEffect(() => {
@@ -209,6 +210,17 @@ function App() {
             localStorage.getItem("role") === "professor" ? (
               <MyCourse />
             ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/ControlHome"
+          element={
+            localStorage.getItem("role") === "control" ? (
+              <ControlHome />
+            ): (
               <Navigate to="/" />
             )
           }

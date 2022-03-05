@@ -14,6 +14,9 @@ const useAddAccounts = () => {
   const [professorName, setProfessorName] = useState("")
   const [professorDepartment, setProfessorDepartment] = useState(undefined)
 
+  const [controlId, setControlId] = useState(undefined)
+  const [controlLevel, setControlLevel] = useState(undefined)
+
   const onNameStudentChange = (e) => setNameStudent(e.target.value)
   const onNationalIDStudentChange = (e) => setNationalIDStudent(e.target.value)
   const onEmailStudentChange = (e) => setEmailStudent(e.target.value)
@@ -21,6 +24,9 @@ const useAddAccounts = () => {
   const onProfessorNationalIdChange = (e) => setProfessorNationalId(e.target.value)
   const onProfessorNameChange = (e) => setProfessorName(e.target.value)
   const onProfessorDepartmentChange = (e) => setProfessorDepartment(e.target.value)
+
+  const onControlIdChange = (e) => setControlId(e.target.value)
+  const onControlLevelChange = (e) => setControlLevel(e.target.value)
 
   const addStudent = async () => {
     let studentCode =
@@ -79,9 +85,7 @@ const useAddAccounts = () => {
   }
 
   const addStudentSheet = async (arrNames, arrNID, arrEmails, studentsCode) => {
-    // console.log(studentsCode)
     try {
-      console.log(arrNID)
       Axios.all([
         await Axios.post("http://localhost:3001/roles/addRoles", {
           idRole: arrNID,
@@ -129,6 +133,27 @@ const useAddAccounts = () => {
     }
   }
 
+  const addControl = async () => {
+    try {
+      let controlPassword = Math.floor(Math.random() * controlId) % 10000000000000
+      Promise.all([
+        await Axios.post("http://localhost:3001/roles/addRole", {
+          idRole: controlLevel,
+          roleName: "control",
+          password: controlPassword
+        }),
+        await Axios.post("http://localhost:3001/control/addControlAccount", {
+          controlLevel: controlLevel,
+          controlAddress: "0x00"
+        })
+      ])
+      
+      showNotification("Success", "Control Added Successfully", "success")
+    } catch(error){
+      showNotification("Error", "Control Not Added!", "danger")
+    }
+  }
+
 
   return {
     onNameStudentChange,
@@ -139,7 +164,10 @@ const useAddAccounts = () => {
     onProfessorNationalIdChange,
     onProfessorNameChange,
     onProfessorDepartmentChange,
-    addProffesor
+    addProffesor,
+    onControlIdChange,
+    onControlLevelChange,
+    addControl
   }
 }
 

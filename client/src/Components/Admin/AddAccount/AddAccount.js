@@ -26,11 +26,15 @@ function AddAccount() {
     onProfessorNationalIdChange,
     onProfessorNameChange,
     onProfessorDepartmentChange,
-    addProffesor
+    addProffesor,
+    onControlIdChange,
+    onControlLevelChange,
+    addControl
   } = useAddAccounts()
 
   const [viewStudent, setViewStudent] = useState(false)
   const [viewProfessor, setViewProfessor] = useState(false)
+  const [viewControl, setViewControl] = useState(false)
   // const { currentAccount, role } = useRoles()
   // const [currentAccount, setCurrentAccount] = useState(localStorage.getItem("currentAccount"))
   // const [role, setRole] = useState(localStorage.getItem("role"))
@@ -162,9 +166,49 @@ function AddAccount() {
     }
   }
 
-  // if (role !== "admin") {
-  //   return <AdminOnly />
-  // }
+  const viewC = () =>{
+    if(viewControl) {
+      return (
+        <Grid container justifyContent="center">
+          <Grid item>
+            <Paper>
+              <Box m={2} p={5} alignItems="center">
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <Typography variant="h5">Add Control</Typography>
+                </Box>
+                <Box>
+                  <TextField
+                    label="Control Level"
+                    type="text"
+                    style={{ width: "400px" }}
+                    onChange={onControlLevelChange}
+                  ></TextField>
+                </Box>
+                <Box>
+                  <TextField
+                    label="Control Id"
+                    type="text"
+                    style={{ width: "400px" }}
+                    onChange={onControlIdChange}
+                  ></TextField>
+                </Box>
+                <Box m={3}>
+                  <Button
+                    variant="contained"
+                    onClick={addControl}
+                    style={{ backgroundColor: "green", color: "floralwhite" }}
+                    type="button"
+                  >
+                    Add Control
+                  </Button>
+                </Box>
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      )
+    }
+  }
   return (
     <Box m={1}>
       <Box m={3}>
@@ -175,6 +219,7 @@ function AddAccount() {
               label="Add Students Accounts"
               onClick={() => {
                 setViewStudent(true)
+                setViewControl(false)
                 setViewProfessor(false)
               }}
             ></Chip>
@@ -185,7 +230,19 @@ function AddAccount() {
               label="Add Professors Account"
               onClick={() => {
                 setViewStudent(false)
+                setViewControl(false)
                 setViewProfessor(true)
+              }}
+            ></Chip>
+          </Grid>
+          <Grid item>
+            <Chip
+              variant="outlined"
+              label="Add Control"
+              onClick={() => {
+                setViewStudent(false)
+                setViewProfessor(false)
+                setViewControl(true)
               }}
             ></Chip>
           </Grid>
@@ -193,6 +250,7 @@ function AddAccount() {
       </Box>
       {viewS()}
       {viewP()}
+      {viewC()}
     </Box>
   )
 }
