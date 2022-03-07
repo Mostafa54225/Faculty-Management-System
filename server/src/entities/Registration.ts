@@ -23,6 +23,8 @@ export class Registration {
   @Column({type: "float"})
   midTermGrade!: number;
 
+  
+
   @Column()
   collegeId!: number;
 

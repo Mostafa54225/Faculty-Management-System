@@ -12,8 +12,9 @@ import {
   Typography,
   Button,
 } from "@material-ui/core"
+
 import useShowRegisteredCoursesLogic from "./ShowRegisteredCoursesLogic"
-import useRoles from "../../utils/handleRoles"
+
 import useStudentHomeLogic from "../StudentHome/StudentHomeLogic"
 import Popup from "./Popup/Popup"
 function ShowRegisteredCourses() {
@@ -29,7 +30,9 @@ function ShowRegisteredCourses() {
     setCourseSelected(course)
   }
 
-  const { registeredCourses } = useShowRegisteredCoursesLogic(studentDetails)
+  const { registeredCourses, getCourseFinalGrade, courseFinalGrade } = useShowRegisteredCoursesLogic(studentDetails)
+
+
 
   if (registeredCourses.length !== 0) {
     return (
@@ -68,7 +71,10 @@ function ShowRegisteredCourses() {
                             {course.courseStatus}
                           </TableCell>
                           <TableCell align="center">
-                            <Button onClick={() => togglePopup(course)}>
+                            <Button onClick={async () => {
+                             togglePopup(course)
+                             await getCourseFinalGrade(course.course.code)
+                            }}>
                               View Grade
                             </Button>
                           </TableCell>
@@ -92,7 +98,8 @@ function ShowRegisteredCourses() {
                       <TableCell>Course Code</TableCell>
                       <TableCell>Course Name</TableCell>
                       <TableCell>Student Id</TableCell>
-                      <TableCell>Grade</TableCell>
+                      <TableCell>Midterm Grade</TableCell>
+                      <TableCell>Final Grade</TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -109,6 +116,9 @@ function ShowRegisteredCourses() {
                       </TableCell>
                       <TableCell component="th" scope="row">
                         {courseSelected.midTermGrade === 0 ? (<>Not Set Yet </>): courseSelected.midTermGrade}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {courseFinalGrade}
                       </TableCell>
                     </TableRow>
                   </TableBody>

@@ -23,6 +23,7 @@ import axios from "axios"
 import TransactionHistory from "./Components/utils/historyUI/TransactionHistory"
 import MyCourse from "./Components/Professor/ProfessorCourses/StudentsInMyCourses/MyCourse"
 import ControlHome from "./Components/Control/ControlHome/ControlHome"
+import CourseControl from "./Components/Control/CourseControl/CourseControl"
 
 function App() {
   useEffect(() => {
@@ -220,6 +221,17 @@ function App() {
           element={
             localStorage.getItem("role") === "control" ? (
               <ControlHome />
+            ): (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route 
+          path="/ControlHome/:courseCode"
+          element={
+            localStorage.getItem("role") === "control" ? (
+              <CourseControl />
             ): (
               <Navigate to="/" />
             )

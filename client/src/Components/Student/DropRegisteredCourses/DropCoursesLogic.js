@@ -52,7 +52,7 @@ const DropCoursesLogic = (registerCourses) => {
       try {
         Promise.all([
           await Axios.post("/api/transact", {
-            courses,
+            data: courses,
             type: "dropCourses",
           }),
           await Axios.post(

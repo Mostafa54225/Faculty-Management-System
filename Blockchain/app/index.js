@@ -42,8 +42,8 @@ app.post("/api/mine", (req, res) => {
 })
 
 app.post("/api/transact", (req, res) => {
-  const {courses, type} = req.body
-  const transaction = wallet.createTransaction(courses, tp, type)
+  const {data, type} = req.body
+  const transaction = wallet.createTransaction(data, tp, type)
   p2pServer.broadCastTransaction(transaction)
   res.redirect("/api/transactions")
 })

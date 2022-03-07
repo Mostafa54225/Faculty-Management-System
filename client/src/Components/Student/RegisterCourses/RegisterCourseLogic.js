@@ -139,7 +139,7 @@ const useRegisterCourse = (currentAccount) => {
           
           Promise.all([
             await Axios.post('/api/transact', {
-              courses,
+              data: courses,
               type: "registerCourses",
             }),
             await Axios.post("http://localhost:3001/registeration/registerCourses/", {

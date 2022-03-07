@@ -54,3 +54,17 @@ export const getCourses = async(req: Request, res: Response) => {
     res.status(400).send(error)
   }
 }
+
+export const getCoursesByLevel = async(req: Request, res: Response) => {
+  try{
+    const courses = await getRepository(Courses).find({
+      where: {
+        level: req.params.level,
+        term: req.params.term
+      }
+    })
+    res.json(courses)
+  } catch(error) {
+    res.status(400).send(error)
+  }
+}

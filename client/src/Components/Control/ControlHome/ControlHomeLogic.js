@@ -8,16 +8,20 @@ const useControlHomeLogic = (currentAccount) => {
     const fetchData = async () => {
       if(isMounted) {
         const response = await axios.get(`http://localhost:3001/control/getControlData/${currentAccount}`)
+        const coursesResponse = await axios.get(`http://localhost:3001/courses/getCoursesByLevel/${response.data.controlLevel}/1`)
         setControlLevel(response.data.controlLevel)
+        setCourses(coursesResponse.data)
       }
     }
     fetchData()
     return () => isMounted = false
   }, [currentAccount])
-  console.log(controlLevel)
 
+  const getControlCourses = async () => {
+    
+  }
   return {
-    controlLevel
+    courses
   }
 }
 
