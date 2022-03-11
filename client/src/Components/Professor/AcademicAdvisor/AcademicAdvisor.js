@@ -1,6 +1,6 @@
 import { Button, CircularProgress, IconButton } from "@material-ui/core"
 import React, { useState } from "react"
-import { Box, Grid, Paper, Typography, Collapse, TableRow, TableHead, TableContainer, TableCell, TableBody, Table } from '@material-ui/core'
+import { Box, makeStyles, Grid, Paper, Typography, Collapse, TableRow, TableHead, TableContainer, TableCell, TableBody, Table } from '@material-ui/core'
 
 
 
@@ -12,7 +12,18 @@ import { BiDownArrowCircle, BiUpArrowCircle } from 'react-icons/bi'
 import { Link, Navigate } from "react-router-dom"
 import useProfessorDetails from "../professorDetails"
 
+const useStyles = makeStyles({
+  button: {
+    backgroundColor: '#3c52b2',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#3c52b2',
+  },
+}})
+
 function AcademicAdvisor() {
+  const classes = useStyles()
 
   // const { currentAccount, role } = useRoles()
   const [currentAccount, setCurrentAccount] = useState(localStorage.getItem("currentAccount"))
@@ -20,7 +31,7 @@ function AcademicAdvisor() {
   
   const { professorDetails } = useProfessorDetails(currentAccount)
   
-  const { students, setCourseStatus } = useAcademicAdvisor(professorDetails)
+  const { students, setCourseStatus, getStudentTranscript } = useAcademicAdvisor(professorDetails)
   
   if(students !== undefined && professorDetails !== undefined) {
     return (
@@ -41,7 +52,7 @@ function AcademicAdvisor() {
 
                   <TableBody>
                     {students.map((row) => (
-                      <Row key={row.studentId} row={row} setCourseStatus={setCourseStatus} />
+                      <Row key={row.studentId} classes={classes} row={row} setCourseStatus={setCourseStatus} getStudentTranscript={getStudentTranscript} />
                     ))}
                   </TableBody>
                 </Table>
@@ -59,7 +70,7 @@ function AcademicAdvisor() {
 
 
 function Row(props) {
-  const { row, setCourseStatus } = props
+  const { row, setCourseStatus, getStudentTranscript, classes } = props
   const [open, setOpen] = useState(false)
   
   return (
@@ -85,12 +96,17 @@ function Row(props) {
               <Typography variant="h6" gutterBottom component="div">
                 Registered Courses
               </Typography>
-              <Link
+              {/* <Link
                 variant="contained"
                 target="_blank"
                 className="btn btn-primary"
                 to={{pathname: `/studentHistory/${row.studentAddress !== '' ? row.studentAddress : "0x00"}`, state: {studentId: row.studentId, studentName: row.studentName, studentAddress: row.studentAddress}}}
-              >Student's History</Link>
+              >Student's History</Link> */}
+              <Button 
+                className={classes.button}
+                onClick={() => getStudentTranscript(row.studentId)}>
+                Student Transcript
+              </Button>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>

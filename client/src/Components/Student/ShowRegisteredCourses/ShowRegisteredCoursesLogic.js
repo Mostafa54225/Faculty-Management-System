@@ -20,7 +20,6 @@ const useShowRegisteredCoursesLogic = (studentDetails) => {
             let result = await Axios.get(`http://localhost:3001/registeration/getStudentSubjects/${studentDetails.studentId}`)
             if(result.data !== []) {
               if(result.data.registeredCourses !== null) {
-                 
                 setRegisteredCourses(result.data)
               }
             }

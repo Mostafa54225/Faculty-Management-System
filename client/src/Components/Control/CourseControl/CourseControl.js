@@ -52,7 +52,7 @@ const CourseControl = () => {
         <Grid container spacing={1} justifyContent="center">
           <Grid item>
             <Typography variant="h3" align="center">
-              Students
+              Students in {courseCode}
             </Typography>
             <Paper>
               <Grid>
